@@ -1,0 +1,43 @@
+.top-header-container {
+  padding: 0.8rem;
+  border-bottom: 0.3px solid #fff;
+}
+
+.bottom-header-container,
+.top-header-container {
+  background-color: #122c45;
+}
+
+.top-header-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-logo {
+  width: 7rem;
+}
+
+.actions-container {
+  margin-left: 40px;
+
+  a {
+    font-size: 14px;
+    background-color: #fff;
+    display: block;
+    margin: 5px 0;
+    color: #122c45;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    font-weight: 600;
+  }
+}
+
+.cart-actions-details {
+  display: flex;
+  align-items: center;
+}

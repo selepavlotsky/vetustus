@@ -1,0 +1,51 @@
+.footer-container {
+  background-color: #122c45;
+  padding: 2rem 0;
+}
+
+.top-footer {
+  text-align: center;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.332);
+}
+
+.main-logo-footer {
+  width: 9rem;
+  text-align: center;
+}
+
+.terms-conditions {
+  padding: 0.5rem 0;
+  text-align: center;
+
+  span {
+    margin-left: 4px;
+  }
+
+  a {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 0 0.3rem;
+  }
+}
+
+.bottom-footer {
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-details {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-right: 2px;
+  }
+
+  a {
+    color: #fff;
+  }
+}

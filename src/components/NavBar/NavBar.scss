@@ -1,0 +1,18 @@
+ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+li {
+  padding: 20px;
+  list-style: none;
+
+  a {
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 0 30px;
+  }
+}

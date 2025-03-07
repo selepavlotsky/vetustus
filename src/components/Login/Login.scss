@@ -1,0 +1,40 @@
+.login-container {
+  padding: 4rem;
+  background-color: #f1f1f1;
+
+  h1 {
+    text-align: center;
+    color: #122c45;
+    margin-bottom: 2rem;
+  }
+
+  form {
+    text-align: center;
+    max-width: 300px;
+    background-color: #e1e1e1;
+    padding: 2.5rem;
+    border-radius: 10px;
+  }
+
+  input {
+    width: 100%;
+    display: block;
+    background-color: #fff;
+    border: none;
+    margin: 10px;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+  }
+
+  button {
+    display: block;
+  }
+
+  p {
+    color: rgb(113, 113, 113);
+  }
+}
+
+.login-actions {
+  color: #122c45;
+}

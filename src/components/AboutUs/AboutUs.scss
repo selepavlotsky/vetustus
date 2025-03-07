@@ -1,0 +1,61 @@
+.about-us-container {
+  padding: 3rem 0;
+  background-color: #efefef;
+
+  img {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  h1 {
+    color: #122c45;
+  }
+}
+
+.about-us-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  h1 {
+    margin-bottom: 3rem;
+  }
+
+  p {
+    color: #122c45;
+    margin-bottom: 1rem;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.about-us-col-1 {
+  width: calc(50% - 1rem);
+  margin-right: 1rem;
+}
+
+.about-contact-container {
+  margin-top: 4rem;
+  a {
+    box-shadow: 0 0 20px #0f253a;
+    border: 1px solid #122c45;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #122c45;
+    padding: 0.5rem 1rem;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 1064px) {
+  .about-us-col-1 {
+    width: 100%;
+    margin-right: 0;
+  }
+}
