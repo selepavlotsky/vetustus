@@ -7,6 +7,7 @@ import AboutUs from "./Components/AboutUs/AboutUs";
 import Store from "./Components/Store/Store";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
+import CartProductDetail from "./components/Store/CartProductDetail";
 
 function App() {
   return (
@@ -15,8 +16,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<AboutUs />} />
-        <Route path="/store" element={<Store />} />
-        {/*   <Route path="/contact" element={<Contact />} /> */}
+
+        <Route path="store" element={<Store />} />
+        <Route path="store/categoria/:categoria" element={<Store />} />
+
+        <Route path="store/detalle/:id" element={<CartProductDetail />} />
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
@@ -29,3 +33,10 @@ function App() {
 }
 
 export default App;
+
+//git init -> inicializa el repositorio
+//git status -> es para ver el estado de los archivos
+//git add . -> añadir los archivo al area previa antes de hacer el guardado final (commit)(el punto selecciona todos los archivos)
+//git commit -m "mensaje para representar el cambio"
+//git remote add origin -> vincula un repositorio remoto (de la compu a la pagina de github)
+//git push -u origin main -> sube los archivo del local al remoto
