@@ -31,6 +31,10 @@ const listadoProductos = [
   },
 ];
 
+export async function peticionCrearProducto () {
+  
+}
+
 export async function peticionListarProductos() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
