@@ -32,7 +32,7 @@ const listadoProductos = [
 ];
 
 export async function peticionCrearProducto () {
-  
+  const prueba = ""
 }
 
 export async function peticionListarProductos() {
