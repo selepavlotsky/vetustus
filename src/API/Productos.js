@@ -34,8 +34,9 @@ const listadoProductos = [
   },
 ];
 
-export const peticionCrearProducto = (producto) =>
-  axios.post("product/new", producto);
+export async function peticionCrearProducto () {
+  
+}
 
 export const peticionListarProductos = () => axios.get("products");
 
