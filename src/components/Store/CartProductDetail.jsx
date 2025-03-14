@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { peticionListarDetalleProducto } from "../../API/Productos";
+import { peticionListarDetalleProducto } from "../../API/productos";
 
 const CartProductDetail = () => {
   const [detalleProducto, setDetalleProducto] = useState(null);

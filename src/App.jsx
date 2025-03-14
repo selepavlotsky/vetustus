@@ -8,12 +8,15 @@ import Store from "./Components/Store/Store";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import CartProductDetail from "./components/Store/CartProductDetail";
+import Prueba from "./components/Prueba/Prueba";
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
+        <Route path="product/crear" element={<Prueba />} />
+
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<AboutUs />} />
 

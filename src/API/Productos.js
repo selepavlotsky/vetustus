@@ -1,3 +1,6 @@
+import instance from "./axios";
+import axios from "./axios";
+
 const listadoProductos = [
   {
     id: 1,
@@ -32,16 +35,10 @@ const listadoProductos = [
 ];
 
 export async function peticionCrearProducto () {
-  const prueba = ""
+  
 }
 
-export async function peticionListarProductos() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(listadoProductos);
-    }, 500);
-  });
-}
+export const peticionListarProductos = () => axios.get("products");
 
 //peticion para listar productos.
 
@@ -59,9 +56,7 @@ export async function peticionListarDetalleProducto(id) {
   });
 }
 
-//peticion para encontrar un producto, si existe con ese id resolvemos la promesa, sino avisamos del error.
-
-export async function peticionListarProductosPorCategoria(categoria) {
+/* export async function peticionListarProductosPorCategoria(categoria) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(
@@ -72,6 +67,30 @@ export async function peticionListarProductosPorCategoria(categoria) {
       );
     }, 500);
   });
-}
+} */
+/* 
+export const peticionListarProductosPorCategoria = (categoria) =>
+  axios.get(`products/category/${categoria}`); */
 
-// peticion para filtrar productos por categoria
+export const peticionListarProductosPorCategoria = async (categoria) => {
+  try {
+    const response = await fetch(
+      `https://testingnode-hvci.onrender.com/api/products/category/${categoria}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data); // vacio
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    alert(error);
+  }
+};
