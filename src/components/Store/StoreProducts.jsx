@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   peticionListarProductos,
   peticionListarProductosPorCategoria,
-} from "../../API/Productos";
+} from "../../API/productos";
 import CartProduct from "./CartProduct";
 
 const StoreProducts = () => {
@@ -24,8 +24,9 @@ const StoreProducts = () => {
         });
     } else {
       peticionListarProductos()
-        .then((data) => {
-          setListadoProductos(data); // sino, obtiene todos los productos
+        .then((response) => {
+          setListadoProductos(response.data);
+          console.log(response); // sino, obtiene todos los productos
         })
         .catch((err) => {
           console.log("Ha ocurrido un error: " + err);
@@ -64,27 +65,22 @@ const StoreProducts = () => {
       <div className="store-products-section">
         <h1>Productos</h1>
         <div className="store-products-container">
-          {
-            (listadoProductos) &&
-              (listadoProductos.length > 0)
-              ?
-              // si listado productos tiene un valor valido haceme el map
-              listadoProductos.map((producto) => {
-                return (
-                  <CartProduct
-                    key={producto.id}
-                    id={producto.id}
-                    nombre={producto.nombre}
-                    portada={producto.portada}
-                    precio={producto.precio}
-                  />
-                );
-              })
-              :
-              <p>No se han encontrado resultados.</p>
-
-         
-            }
+          {listadoProductos && listadoProductos.length > 0 ? (
+            // si listado productos tiene un valor valido haceme el map
+            listadoProductos.map((producto) => {
+              return (
+                <CartProduct
+                  key={producto._id}
+                  id={producto._id}
+                  titulo={producto.titulo}
+                  portada={producto.portada}
+                  precio={producto.precio}
+                />
+              );
+            })
+          ) : (
+            <p>No se han encontrado resultados.</p>
+          )}
         </div>
       </div>
     </>

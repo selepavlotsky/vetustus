@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 import "./Register.scss";
+import { useState } from "react";
+import peticionRegistrarUsuario from "../../API/register";
 
 const Register = () => {
+  const [errorRegistro, setErrorRegistro] = useState(null); // estado para guardar el mensaje de error si el registro sale mal.
+
   const regexPassword =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
   const {
@@ -11,9 +15,16 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit(async (values) => {
     console.log(values);
+
     // ENVIO DEL FORM AL BACK.
+    try {
+      const data = await peticionRegistrarUsuario(values); // llama a la funcion para enviar los datos del usuario a registrar al back.
+      console.log(data); // mostrame la respuesta en la consola.
+    } catch (error) {
+      setErrorRegistro(error.response.data.message); // si hay algun error en el try, manda mensaje de error.
+    }
   });
   return (
     <div className="register-container">
@@ -147,6 +158,8 @@ const Register = () => {
               <p className="form-error">{errors.passwordConfirm.message}</p>
             )}
           </div>
+          {errorRegistro && <p className="form-error">{errorRegistro}</p>}{" "}
+          {/*si existe un error en el registro, mostramelo.*/}
           <button type="submit">Registrarme</button>
         </form>
       </div>
@@ -155,3 +168,5 @@ const Register = () => {
 };
 
 export default Register;
+
+//no funciona el register
