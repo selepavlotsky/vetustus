@@ -2,11 +2,10 @@ import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import "./Login.scss";
 import { useState } from "react";
-import peticionLoginUsuario from "../../API/login";
+import { peticionLogin } from "../../API/usuarios";
 
 const Login = () => {
-  const regexPassword =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
+
   const {
     register,
     handleSubmit,
@@ -19,12 +18,13 @@ const Login = () => {
     console.log(values);
     // ENVIO DEL FORM AL BACK.
     try {
-      const data = await peticionLoginUsuario(values); //llama a la funcion para enviar los datos del login
-      console.log(data); // ver respuesta en consola
+      const response = await peticionLogin(values); //llama a la funcion para enviar los datos del login
+      console.log(response.data); // ver respuesta en consola
     } catch (error) {
       setErrorLogin(error.response.data.message); // si hay error en el try mandar mensaje de error
     }
   });
+
 
   return (
     <div className="login-container">
@@ -59,12 +59,7 @@ const Login = () => {
             minLength: {
               value: 6,
               message: "La password debe contener al menos 6 carácteres",
-            },
-            pattern: {
-              value: regexPassword,
-              message:
-                "La password debe contener minusculas, mayusculas, al menos un simbolo especial y un número.",
-            },
+            }
           })}
         />{" "}
         {errors.password && (

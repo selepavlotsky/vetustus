@@ -1,15 +1,15 @@
-import { peticionCrearProducto } from "../../API/productos";
+import { peticionCrearProducto } from "../../API/Productos";
 
 const Prueba = () => {
   const crearProducto = async () => {
     try {
       let response = await peticionCrearProducto({
-        nombre: "hola",
+        nombre: "prueba",
       });
-
       console.log(response);
     } catch (error) {
       console.log(error);
+      alert(error.response.data.message)
     }
   };
   return (
