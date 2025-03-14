@@ -1,11 +1,9 @@
 import "./Store.scss";
 import { Link, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import {
-  peticionListarProductos,
-  peticionListarProductosPorCategoria,
-} from "../../API/productos";
+
 import CartProduct from "./CartProduct";
+import { peticionListarProductos, peticionListarProductosPorCategoria } from "../../API/Productos";
 
 const StoreProducts = () => {
   const [listadoProductos, setListadoProductos] = useState([]); // este estado lo creamos para almacenar la lista de productos que obtenemos de la API, arranca vacio.
@@ -16,8 +14,8 @@ const StoreProducts = () => {
     if (categoria) {
       // si hay categoria, obtiene los productos de esa misma categoria
       peticionListarProductosPorCategoria(categoria)
-        .then((data) => {
-          setListadoProductos(data);
+        .then((response) => {
+          setListadoProductos(response.data);
         })
         .catch((err) => {
           console.log("Ha ocurrido un error: " + err);
@@ -45,7 +43,7 @@ const StoreProducts = () => {
           <Link className="categories-items" to="/store/categoria/mesasdeluz">
             Mesitas de luz
           </Link>
-          <Link className="categories-items" to="/store/categoria/sillas">
+          <Link className="categories-items" to="/store/categoria/Sillas">
             Sillas
           </Link>
           <Link className="categories-items" to="/store/categoria/lamparas">

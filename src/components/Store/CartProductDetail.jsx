@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { peticionListarDetalleProducto } from "../../API/productos";
+import { peticionListarProductoPorID } from "../../API/Productos";
+
 
 const CartProductDetail = () => {
   const [detalleProducto, setDetalleProducto] = useState(null);
@@ -14,8 +15,8 @@ const CartProductDetail = () => {
   useEffect(() => {
     async function listarDetalle() {
       try {
-        const detalle = await peticionListarDetalleProducto(id); //detalle va a ser el producto puntual con ese id.
-        setDetalleProducto(detalle); // se actualiza el estado y entonces se renderiza el componente ahora si con la informacion del producto.
+        const response = await peticionListarProductoPorID(id); //detalle va a ser el producto puntual con ese id.
+        setDetalleProducto(response.data); // se actualiza el estado y entonces se renderiza el componente ahora si con la informacion del producto.
       } catch (error) {
         alert(error);
       }

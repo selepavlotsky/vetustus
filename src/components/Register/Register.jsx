@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import "./Register.scss";
 import { useState } from "react";
-import peticionRegistrarUsuario from "../../API/register";
+import { peticionRegister } from "../../API/usuarios";
+
 
 const Register = () => {
   const [errorRegistro, setErrorRegistro] = useState(null); // estado para guardar el mensaje de error si el registro sale mal.
@@ -20,7 +21,7 @@ const Register = () => {
 
     // ENVIO DEL FORM AL BACK.
     try {
-      const data = await peticionRegistrarUsuario(values); // llama a la funcion para enviar los datos del usuario a registrar al back.
+      const data = await peticionRegister(values); // llama a la funcion para enviar los datos del usuario a registrar al back.
       console.log(data); // mostrame la respuesta en la consola.
     } catch (error) {
       setErrorRegistro(error.response.data.message); // si hay algun error en el try, manda mensaje de error.
@@ -99,7 +100,7 @@ const Register = () => {
                 },
               })}
             />
-            {errors.email && (
+            {errors.telefono && (
               <p className="form-error">{errors.telefono.message}</p>
             )}
           </div>
