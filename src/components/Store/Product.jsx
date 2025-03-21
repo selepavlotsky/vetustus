@@ -1,7 +1,7 @@
 import "./Store.scss";
 import { Link } from "react-router";
 
-const CartProduct = ({ id, titulo, portada, precio }) => {
+const Product = ({ id, titulo, portada, precio }) => {
   console.log(portada);
 
   return (
@@ -20,4 +20,4 @@ const CartProduct = ({ id, titulo, portada, precio }) => {
   );
 };
 
-export default CartProduct;
+export default Product;

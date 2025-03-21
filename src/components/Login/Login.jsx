@@ -1,30 +1,34 @@
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import "./Login.scss";
-import { useState } from "react";
-import { peticionLogin } from "../../API/usuarios";
+import { useUserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 const Login = () => {
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-  const [errorLogin, setErrorLogin] = useState(null); // estado para guardar el error si el login sale mal
+  const {
+    loginUsuario,
+    errors: errorsLogin,
+    estaAutenticado,
+  } = useUserContext();
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values);
-    // ENVIO DEL FORM AL BACK.
-    try {
-      const response = await peticionLogin(values); //llama a la funcion para enviar los datos del login
-      console.log(response.data); // ver respuesta en consola
-    } catch (error) {
-      setErrorLogin(error.response.data.message); // si hay error en el try mandar mensaje de error
-    }
+    loginUsuario(values);
   });
 
+  useEffect(() => {
+    console.log(estaAutenticado);
+
+    if (estaAutenticado) {
+      navigate("/");
+    }
+  }, [estaAutenticado]);
 
   return (
     <div className="login-container">
@@ -59,13 +63,13 @@ const Login = () => {
             minLength: {
               value: 6,
               message: "La password debe contener al menos 6 carácteres",
-            }
+            },
           })}
         />{" "}
         {errors.password && (
           <p className="form-error">{errors.password.message}</p>
         )}
-        {errorLogin && <p className="form-error">{errorLogin}</p>}
+        {errorsLogin && <p className="form-error">{errorsLogin}</p>}
         {/*si existe un error en el login, mostramelo.*/}
         <button>Ingresar</button>
         <Link className="login-actions">Me olvidé la contraseña</Link>

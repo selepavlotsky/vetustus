@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { peticionListarProductoPorID } from "../../API/Productos";
 
-
-const CartProductDetail = () => {
+const ProductDetail = () => {
   const [detalleProducto, setDetalleProducto] = useState(null);
 
   //creamos el estado para meter los datos del detalle producto cuando se obtengan de la api.
@@ -49,4 +48,4 @@ const CartProductDetail = () => {
   );
 };
 
-export default CartProductDetail;
+export default ProductDetail;

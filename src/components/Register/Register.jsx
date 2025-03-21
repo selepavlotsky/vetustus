@@ -1,11 +1,16 @@
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import "./Register.scss";
-import { useState } from "react";
-import { peticionRegister } from "../../API/usuarios";
-
+import { useUserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router";
 
 const Register = () => {
-  const [errorRegistro, setErrorRegistro] = useState(null); // estado para guardar el mensaje de error si el registro sale mal.
+  const navigate = useNavigate();
+  const {
+    registroUsuario,
+    estaAutenticado,
+    errors: errorsRegistro,
+  } = useUserContext();
 
   const regexPassword =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
@@ -17,16 +22,14 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log(values);
-
-    // ENVIO DEL FORM AL BACK.
-    try {
-      const data = await peticionRegister(values); // llama a la funcion para enviar los datos del usuario a registrar al back.
-      console.log(data); // mostrame la respuesta en la consola.
-    } catch (error) {
-      setErrorRegistro(error.response.data.message); // si hay algun error en el try, manda mensaje de error.
-    }
+    await registroUsuario(values);
   });
+
+  useEffect(() => {
+    if (estaAutenticado) {
+      navigate("/");
+    }
+  }, [estaAutenticado]);
   return (
     <div className="register-container">
       <div className="wrapper register-details">
@@ -159,7 +162,7 @@ const Register = () => {
               <p className="form-error">{errors.passwordConfirm.message}</p>
             )}
           </div>
-          {errorRegistro && <p className="form-error">{errorRegistro}</p>}{" "}
+          {errorsRegistro && <p className="form-error">{errorsRegistro}</p>}{" "}
           {/*si existe un error en el registro, mostramelo.*/}
           <button type="submit">Registrarme</button>
         </form>

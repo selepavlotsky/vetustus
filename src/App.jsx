@@ -7,30 +7,36 @@ import AboutUs from "./Components/AboutUs/AboutUs";
 import Store from "./Components/Store/Store";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
-import CartProductDetail from "./components/Store/CartProductDetail";
+import CartProductDetail from "./components/Store/ProductDetail";
 import Prueba from "./components/Prueba/Prueba";
+import { ProductsProvider } from "./context/productsContext";
+import { UserProvider } from "./context/userContext";
 
 function App() {
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="product/crear" element={<Prueba />} />
+      <UserProvider>
+        <ProductsProvider>
+          <Header />
+          <Routes>
+            <Route path="product/crear" element={<Prueba />} />
 
-        <Route path="/" element={<Home />} />
-        <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
 
-        <Route path="store" element={<Store />} />
-        <Route path="store/categoria/:categoria" element={<Store />} />
+            <Route path="store" element={<Store />} />
+            <Route path="store/categoria/:categoria" element={<Store />} />
 
-        <Route path="store/detalle/:id" element={<CartProductDetail />} />
+            <Route path="store/detalle/:id" element={<CartProductDetail />} />
 
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
 
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-      <Footer />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </ProductsProvider>
+      </UserProvider>
     </>
   );
 }
@@ -43,3 +49,5 @@ export default App;
 //git commit -m "mensaje para representar el cambio"
 //git remote add origin -> vincula un repositorio remoto (de la compu a la pagina de github)
 //git push -u origin main -> sube los archivo del local al remoto
+
+//git pull origin main

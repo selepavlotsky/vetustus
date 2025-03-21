@@ -1,36 +1,23 @@
 import "./Store.scss";
 import { Link, useParams } from "react-router";
-import { useEffect, useState } from "react";
-
-import CartProduct from "./CartProduct";
-import { peticionListarProductos, peticionListarProductosPorCategoria } from "../../API/Productos";
+import { useEffect } from "react";
+import Product from "./Product";
+import { useProductsContext } from "../../context/ProductsContext";
 
 const StoreProducts = () => {
-  const [listadoProductos, setListadoProductos] = useState([]); // este estado lo creamos para almacenar la lista de productos que obtenemos de la API, arranca vacio.
-
+  const { listarProductos, listarProductosPorCategoria, listadoProductos } =
+    useProductsContext(); // accedemos a la funciones y estados del contexto
   const { categoria } = useParams(); // extraemos el parametro categoria de la url.
 
   useEffect(() => {
     if (categoria) {
-      // si hay categoria, obtiene los productos de esa misma categoria
-      peticionListarProductosPorCategoria(categoria)
-        .then((response) => {
-          setListadoProductos(response.data);
-        })
-        .catch((err) => {
-          console.log("Ha ocurrido un error: " + err);
-        });
+      //si hay categoria listame los productos de esa categoria
+      listarProductosPorCategoria(categoria);
     } else {
-      peticionListarProductos()
-        .then((response) => {
-          setListadoProductos(response.data);
-          console.log(response); // sino, obtiene todos los productos
-        })
-        .catch((err) => {
-          console.log("Ha ocurrido un error: " + err);
-        });
+      // sino mostrame todos los productos
+      listarProductos();
     }
-  }, [categoria]); // aca como dependencia va categoria para que se ejecute cada vez que cambia la categoria.
+  }, [categoria]);
 
   return (
     <>
@@ -67,7 +54,7 @@ const StoreProducts = () => {
             // si listado productos tiene un valor valido haceme el map
             listadoProductos.map((producto) => {
               return (
-                <CartProduct
+                <Product
                   key={producto._id}
                   id={producto._id}
                   titulo={producto.titulo}
