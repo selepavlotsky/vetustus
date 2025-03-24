@@ -1,5 +1,4 @@
-import Cookies from "js-cookie";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   peticionLogin,
   peticionRegister,
@@ -17,6 +16,7 @@ export const useUserContext = () => {
 };
 
 export const UserProvider = ({ children }) => {
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [usuario, setUsuario] = useState(null);
   const [estaAutenticado, setEstaAutenticado] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -24,7 +24,8 @@ export const UserProvider = ({ children }) => {
   const registerUsuario = async (usuario) => {
     try {
       const response = await peticionRegister(usuario);
-      setUsuario(response.data);
+      setUsuario(response.data.usuario);
+      localStorage.setItem("token", response.data.token);
       setEstaAutenticado(true);
     } catch (error) {
       setErrors([error.response.data.message]);
@@ -34,7 +35,8 @@ export const UserProvider = ({ children }) => {
   const loginUsuario = async (usuario) => {
     try {
       const response = await peticionLogin(usuario);
-      setUsuario(response.data);
+      setUsuario(response.data.usuario);
+      localStorage.setItem("token", response.data.token);
       setEstaAutenticado(true);
     } catch (error) {
       setErrors([error.response.data.message]);
@@ -42,18 +44,16 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
-    Cookies.remove("token"); //eliminamos la cookie llamada token que guardaba la info del usuario.
+    localStorage.removeItem("token");
     setEstaAutenticado(false); // el usuario ya no está autenticado
     setUsuario(null); // limpiamos la informacion del usuario
   };
 
   /* VERIFICACIÓN DE LOGIN */
 
-  //  cookie -> fragmento de datos que un sitio web guarda en el navegador del usuario.
   async function verificarLogin() {
-    const cookies = Cookies.get(); // obtiene las cookies del navegador
-    if (cookies.token) {
-      // si existe la cookie token entonces el usuario esta activo
+    const token = localStorage.getItem("token");
+    if (token) {
       try {
         const response = await peticionVerificarTokenUsuario(); // si el token es valido
         setUsuario(response.data); // se guarda la info en el estado usuario
@@ -70,7 +70,12 @@ export const UserProvider = ({ children }) => {
       setEstaAutenticado(false); // no esta autenticado
       console.log("Usuario denegado desde el front.");
     }
+    setIsLoadingUser(false);
   }
+
+  useEffect(() => {
+    verificarLogin();
+  }, []);
 
   return (
     <UserContext.Provider
