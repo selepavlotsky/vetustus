@@ -38,11 +38,8 @@ function App() {
               <Route path="/login" element={<Login />} />
 
               <Route element={<RutasProtegidas />}>
-                <Route path="/perfil" element={<PerfilUsuario />} />
-              </Route>
-
-              <Route element={<RutasProtegidas />}>
                 <Route path="/carrito" element={<Cart />} />
+                <Route path="/perfil" element={<PerfilUsuario />} />
               </Route>
 
               <Route path="/*" element={<NotFound />} />

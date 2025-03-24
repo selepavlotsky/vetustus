@@ -34,3 +34,14 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+
+
+/*
+  Ej cart: 
+
+  [
+    {product:'asd32131asd', cantidad:4},
+     {product:'abc32131asd', cantidad:1},
+  ]
+*/

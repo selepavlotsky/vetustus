@@ -83,6 +83,7 @@ export const UserProvider = ({ children }) => {
         usuario,
         estaAutenticado,
         errors,
+        isLoadingUser,
         loginUsuario,
         logout,
         registerUsuario,
