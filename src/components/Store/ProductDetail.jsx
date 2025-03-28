@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { peticionListarProductoPorID } from "../../API/Productos";
+import { useCartContext } from "../../context/CartContext";
 
 const ProductDetail = () => {
+  const { cart, addItem, totalCart } = useCartContext();
   const [detalleProducto, setDetalleProducto] = useState(null);
 
   //creamos el estado para meter los datos del detalle producto cuando se obtengan de la api.
@@ -23,8 +25,27 @@ const ProductDetail = () => {
 
     listarDetalle();
   }, []);
+
+  const agregarAlCarrito = (item) => {
+    addItem(item);
+  };
+
   return (
     <div className="product-detail-container">
+      {cart && cart.length > 0 && (
+        <>
+          <p>Total: {totalCart}</p>
+          <ul>
+            {cart.map((producto) => {
+              return (
+                <li>
+                  {producto.product} - {producto.cantidad}
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
       {detalleProducto && (
         <div className="product-detail">
           <img
@@ -40,7 +61,17 @@ const ProductDetail = () => {
               En stock: <span>{detalleProducto.stock}</span>
             </p>
 
-            <button>Comprar</button>
+            <button
+              onClick={() => {
+                agregarAlCarrito({
+                  id: detalleProducto._id,
+                  cantidad: 1,
+                  precio: detalleProducto.precio,
+                });
+              }}
+            >
+              Agregar al carrito
+            </button>
           </div>
         </div>
       )}

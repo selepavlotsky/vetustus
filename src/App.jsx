@@ -4,7 +4,7 @@ import Footer from "./Components/Footer/Footer";
 import Home from "./Components/Home/Home";
 import NotFound from "./components/NotFound/NotFound";
 import AboutUs from "./Components/AboutUs/AboutUs";
-import Cart from "./components/Store/Cart";
+import Cart from "./components/Store/Cart/Cart";
 import Store from "./Components/Store/Store";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
@@ -38,7 +38,7 @@ function App() {
               <Route path="/login" element={<Login />} />
 
               <Route element={<RutasProtegidas />}>
-                <Route path="/carrito" element={<Cart />} />
+                <Route path="/cart" element={<Cart />} />
                 <Route path="/perfil" element={<PerfilUsuario />} />
               </Route>
 
