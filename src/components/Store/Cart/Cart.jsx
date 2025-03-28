@@ -29,7 +29,7 @@ const Cart = () => {
             <div className="producto-carrito wrapper">
               <img
                 className="imagen-producto-carrito"
-                src={`/public/Products/${producto.portada}`}
+                src={`Products/${producto.portada}`}
                 alt={producto.titulo}
               />
               <h3 className="titulo-producto-carrito">{producto.titulo}</h3>
