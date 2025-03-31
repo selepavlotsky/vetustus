@@ -1,0 +1,41 @@
+.confirmation-container {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2,
+h3 {
+  color: #000;
+}
+
+p {
+  margin: 10px 0;
+  color: #000;
+}
+
+.order-summary {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  text-align: left;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useCartContext } from "../../../context/CartContext";
 import "./Cart.scss";
+import CartItem from "./CartItem";
 
 const Cart = () => {
   const { cartDetail, listarDetalleCarrito, totalCart } = useCartContext();
@@ -10,57 +11,28 @@ const Cart = () => {
   }, []);
 
   return (
-    <>
-      <section className="seccion-carrito wrapper">
-        <h2>Carrito de compras</h2>
-        <div className="cabecera-tabla">
-          <div className="cabecera-tabla-col">Producto</div>
-          <div className="cabecera-tabla-col">Título</div>
-          <div className="cabecera-tabla-col">Cantidad</div>
-          <div className="cabecera-tabla-col">Precio</div>
-          <div className="cabecera-tabla-col">Subtotal</div>
-          <div className="cabecera-tabla-col">Acción</div>
-        </div>
-      </section>
-
+    <section className="seccion-carrito wrapper">
+      <h2>Carrito de compras</h2>
       {cartDetail.length > 0 ? ( // si hay productos en el carrito lo recorremos para mostrar cada uno
         <>
+          <div className="cabecera-tabla">
+            <div className="cabecera-tabla-col">Producto</div>
+            <div className="cabecera-tabla-col">Título</div>
+            <div className="cabecera-tabla-col">Cantidad</div>
+            <div className="cabecera-tabla-col">Precio</div>
+            <div className="cabecera-tabla-col">Subtotal</div>
+            <div className="cabecera-tabla-col">Acción</div>
+          </div>
           {cartDetail.map((producto) => (
-            <div className="producto-carrito wrapper">
-              <img
-                className="imagen-producto-carrito"
-                src={`Products/${producto.portada}`}
-                alt={producto.titulo}
-              />
-              <h3 className="titulo-producto-carrito">{producto.titulo}</h3>
-              <div className="contenedor-cantidad">
-                <button
-                  onClick={() => restarCantidadCarrito(producto.id)}
-                  className="restar-cantidad"
-                >
-                  -
-                </button>
-                <span>{producto.cantidad}</span>
-                <button
-                  onClick={() => sumarCantidadCarrito(producto.id)}
-                  className="sumar-cantidad"
-                >
-                  +
-                </button>
-              </div>
-              <p className="precio-producto-carrito">${producto.precio}</p>
-              <p className="subtotal-producto-carrito">
-                ${producto.precio * producto.cantidad}
-              </p>
-              <div className="contenedor-btn">
-                <button
-                  onClick={() => quitarProductoCarrito(producto.id)}
-                  className="btn-quitar-producto-carrito"
-                >
-                  Quitar
-                </button>
-              </div>
-            </div>
+            <CartItem
+              key={producto.id}
+              id={producto.id}
+              titulo={producto.titulo}
+              portada={producto.portada}
+              precio={producto.precio}
+              cantidad={producto.cantidad}
+              stock={producto.stock}
+            />
           ))}
           <div className="contenedor-total-carrito">
             <h2>
@@ -74,7 +46,7 @@ const Cart = () => {
       ) : (
         <p className="mensaje-carrito-vacio">El carrito está vacío</p>
       )}
-    </>
+    </section>
   );
 };
 

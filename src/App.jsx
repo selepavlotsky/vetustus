@@ -11,6 +11,7 @@ import Login from "./components/Login/Login";
 import CartProductDetail from "./components/Store/ProductDetail";
 import Prueba from "./components/Prueba/Prueba";
 import PerfilUsuario from "./components/Perfil/PerfilUsuario";
+import SuccessfulPurchase from "./components/Store/SuccessfulPurchase/SuccessfulPurchase";
 import { RutasProtegidas } from "./RutasProtegidas";
 import { ProductsProvider } from "./context/productsContext";
 import { UserProvider } from "./context/userContext";
@@ -40,6 +41,7 @@ function App() {
               <Route element={<RutasProtegidas />}>
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/perfil" element={<PerfilUsuario />} />
+                <Route path="/compraexitosa" element={<SuccessfulPurchase />} />
               </Route>
 
               <Route path="/*" element={<NotFound />} />

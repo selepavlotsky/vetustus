@@ -86,9 +86,56 @@ export const CartProvider = ({ children }) => {
       );
       setCartDetail(cartProducts); // guardamos los productos en el estado de cartDetail
       setTotalCart(total); //guardamos el valor total en el estado totalCart
+      console.log(cartProducts);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const quitarProductoCarrito = async (id) => {
+    const updatedCart = cart.filter((producto) => producto.product != id);
+    setCart(updatedCart);
+
+    /*  const updatedCartDetail = cartDetail.filter(
+      (producto) => producto.id != id
+    );
+    setCartDetail(updatedCartDetail);
+    setTotalCart(
+      updatedCartDetail.reduce(
+        (acc, product) => acc + product.precio * product.cantidad,
+        0
+      )
+    ); */
+
+    setCantidadProductos(cantidadProductos - 1);
+    await peticionActualizarCarrito({ cart: updatedCart });
+    await listarDetalleCarrito();
+  };
+
+  const sumarCantidadCarrito = async (id) => {
+    const updatedCart = cart.map((producto) => {
+      if (producto.product === id) {
+        let nuevaCantidad = producto.cantidad + 1;
+        return { ...producto, cantidad: nuevaCantidad };
+      }
+      return producto;
+    });
+    setCart(updatedCart);
+    await peticionActualizarCarrito({ cart: updatedCart });
+    await listarDetalleCarrito();
+  };
+
+  const restarCantidadCarrito = async (id) => {
+    const updatedCart = cart.map((producto) => {
+      if (producto.product === id) {
+        let nuevaCantidad = producto.cantidad - 1;
+        return { ...producto, cantidad: nuevaCantidad };
+      }
+      return producto;
+    });
+    setCart(updatedCart);
+    await peticionActualizarCarrito({ cart: updatedCart });
+    await listarDetalleCarrito();
   };
 
   useEffect(() => {
@@ -105,6 +152,9 @@ export const CartProvider = ({ children }) => {
         cantidadProductos,
         cartDetail,
         listarDetalleCarrito,
+        quitarProductoCarrito,
+        sumarCantidadCarrito,
+        restarCantidadCarrito,
       }}
     >
       {children}
