@@ -4,7 +4,7 @@ import "./Cart.scss";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const { cartDetail, listarDetalleCarrito, totalCart } = useCartContext();
+  const { cartDetail, listarDetalleCarrito, totalCart, cart } = useCartContext();
 
   useEffect(() => {
     listarDetalleCarrito();
