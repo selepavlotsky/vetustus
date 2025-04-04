@@ -1,39 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PerfilUsuario.scss";
 import "../ModalDetalleVenta.scss";
-import UserPurchase from "../UserPurchase/UserPurchase";
 import { ModalDetalleVenta } from "../ModalDetalleVenta";
+import { TablaOrdenesCompra } from "../TablaOrdenesCompra/TablaOrdenesCompra";
+import { useSaleContext } from "../../../context/SaleContext";
 
 const Perfil = () => {
-  const [showModal, setShowModal] = useState(false);
+    const { listarHistorialComprasCliente, comprasCliente, loadingSale,showModalSaleDetail } = useSaleContext();
 
-  const toggleModal = () => {
-    setShowModal((prev) => !prev);
-  };
 
+  useEffect(() => {
+    listarHistorialComprasCliente();
+  }, [])
   return (
     <>
       <div className="perfil-container">
         <h2 className="nombre-usuario">Bienvenido Juan Pérez!</h2>
 
+
         <h2>Tus Compras</h2>
-        <table className="tabla-mis-compras">
-          <thead>
-            <tr>
-              <th>Número de orden</th>
-              <th>Fecha</th>
-              <th>Tipo de envío</th>
-              <th>Método de pago</th>
-              <th>Total</th>
-              <th>Detalle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <UserPurchase toggleModal={toggleModal} />
-          </tbody>
-        </table>
+        {
+          loadingSale
+          ?
+          <p>Cargando..</p>
+          :
+            comprasCliente.length > 0 
+            ?
+            <TablaOrdenesCompra />
+            :
+            <p>Usted no posee compras realizadas.</p>
+          
+        }
+      
       </div>
-      {showModal && <ModalDetalleVenta toggleModal={toggleModal} id={32} />}
+      {showModalSaleDetail && <ModalDetalleVenta />}
     </>
   );
 };

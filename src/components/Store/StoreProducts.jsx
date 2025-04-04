@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import Product from "./Product";
 import { useProductsContext } from "../../context/ProductsContext";
 
+
 const StoreProducts = () => {
+
   const { listarProductos, listarProductosPorCategoria, listadoProductos } =
     useProductsContext(); // accedemos a la funciones y estados del contexto
   const { categoria } = useParams(); // extraemos el parametro categoria de la url.

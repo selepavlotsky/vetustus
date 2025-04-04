@@ -38,6 +38,15 @@ export const CartProvider = ({ children }) => {
 
     let updatedCart = [];
     if (prodExistente) {
+      // si quiere agregar un prod que ya está en el carrito, verifico si la nueva cantidad supera al stock, si es asi muestro error
+      let nuevaCantidad = parseInt(item.cantidad) + parseInt(prodExistente.cantidad)
+      console.log('nueva cantidad: ' + nuevaCantidad);
+      console.log('stock disponible: ' + item.stockDisponible);
+
+      if (nuevaCantidad > item.stockDisponible) {
+        alert('Supera el stock disponible.')
+        return false;
+      }
       // si el producto ya existe en el carrito
       updatedCart = cart.map((producto) => {
         if (producto.product === item.id) {
@@ -57,7 +66,7 @@ export const CartProvider = ({ children }) => {
     setTotalCart(totalCart + item.precio * item.cantidad);
 
     await peticionActualizarCarrito({ cart: updatedCart });
-
+    alert('Producto agregado al carrito')
     /*   setTotalCart((prevState) => {
       return prevState + item.precio * item.cantidad;
     }); */
