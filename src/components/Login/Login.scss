@@ -38,4 +38,22 @@
 
 .login-actions {
   color: #122c45;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.login-button {
+  margin: 0 auto;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  background-color: #122c45;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.login-button:hover {
+  background-color: #1f5486;
 }

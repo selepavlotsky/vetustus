@@ -20,6 +20,7 @@ export const CartProvider = ({ children }) => {
   const [totalCart, setTotalCart] = useState(0);
   const [cantidadProductos, setCantidadProductos] = useState(0);
   const [cartDetail, setCartDetail] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const listarCarrito = async () => {
     try {
@@ -113,6 +114,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const sumarCantidadCarrito = async (id) => {
+    setIsLoading(true);
     const updatedCart = cart.map((producto) => {
       if (producto.product === id) {
         let nuevaCantidad = producto.cantidad + 1;
@@ -123,9 +125,11 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
     await peticionActualizarCarrito({ cart: updatedCart });
     await listarDetalleCarrito();
+    setIsLoading(false);
   };
 
   const restarCantidadCarrito = async (id) => {
+    setIsLoading(true);
     const updatedCart = cart.map((producto) => {
       if (producto.product === id) {
         let nuevaCantidad = producto.cantidad - 1;
@@ -136,11 +140,19 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
     await peticionActualizarCarrito({ cart: updatedCart });
     await listarDetalleCarrito();
+    setIsLoading(false);
   };
 
   useEffect(() => {
     listarCarrito();
   }, []);
+
+  const resetCartState = () => {
+    setCart([]);
+    setTotalCart(0);
+    setCantidadProductos(0);
+    setCartDetail([]);
+  };
 
   return (
     <CartContext.Provider
@@ -155,18 +167,11 @@ export const CartProvider = ({ children }) => {
         quitarProductoCarrito,
         sumarCantidadCarrito,
         restarCantidadCarrito,
+        resetCartState,
+        isLoading,
       }}
     >
       {children}
     </CartContext.Provider>
   );
 };
-
-/*
-  Ej cart: 
-
-  [
-    {product:'asd32131asd', cantidad:4},
-     {product:'abc32131asd', cantidad:1},
-  ]
-*/

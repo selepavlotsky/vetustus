@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useCartContext } from "../../../context/CartContext";
 
-const CartItem = ({ id, titulo, portada, precio, cantidad, stock }) => {
+const CartItem = ({
+  id,
+  titulo,
+  portada,
+  precio,
+  cantidad,
+  stock,
+  isLoading,
+}) => {
   const { quitarProductoCarrito, sumarCantidadCarrito, restarCantidadCarrito } =
     useCartContext();
 
@@ -30,13 +38,16 @@ const CartItem = ({ id, titulo, portada, precio, cantidad, stock }) => {
       />
       <h3 className="titulo-producto-carrito">{titulo}</h3>
       <div className="contenedor-cantidad">
+        {isLoading && ( // si isLoading es true entonces mostrar frase modificando cantidad
+          <span className="loading-text">Modificando cantidad...</span>
+        )}
         <button
           onClick={() => handleRestarCantidad(id)}
           className="restar-cantidad"
         >
           -
         </button>
-        <span>{cantidad}</span>
+        <span>{cantidadProducto}</span>
         <button
           onClick={() => handleSumarCantidad(id)}
           className="sumar-cantidad"
@@ -44,6 +55,7 @@ const CartItem = ({ id, titulo, portada, precio, cantidad, stock }) => {
           +
         </button>
       </div>
+
       <p className="precio-producto-carrito">${precio}</p>
       <p className="subtotal-producto-carrito">${precio * cantidad}</p>
       <div className="contenedor-btn">

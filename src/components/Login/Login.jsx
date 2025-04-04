@@ -71,8 +71,8 @@ const Login = () => {
         )}
         {errorsLogin && <p className="form-error">{errorsLogin}</p>}
         {/*si existe un error en el login, mostramelo.*/}
-        <button>Ingresar</button>
-        <Link className="login-actions">Me olvidé la contraseña</Link>
+        <button className="login-button">Ingresar</button>
+        <Link className="login-actions">Olvidé mi contraseña</Link>
         <p>
           Si todavía no te registraste hace{" "}
           <Link className="login-actions" to="/register">
