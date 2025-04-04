@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   peticionRegistrarVenta,
   peticionListarHistorialCompraCliente,
+  peticionListarDetalleCompra,
 } from "../API/sale";
 
 export const SaleContext = createContext();
@@ -19,6 +20,8 @@ export const SaleProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [ventaProcesada, setVentaProcesada] = useState(false);
   const [comprasCliente, setComprasClientes] = useState([]);
+  const [detalleCompra, setDetalleCompra] = useState(null);
+  const [showModalSaleDetail, setShowModalSaleDetail] = useState(false);
 
   const registrarVenta = async (venta) => {
     setLoadingSale(true);
@@ -36,20 +39,43 @@ export const SaleProvider = ({ children }) => {
   };
 
   const listarHistorialComprasCliente = async () => {
+    setLoadingSale(true);
     try {
       const response = await peticionListarHistorialCompraCliente();
       console.log(response.data);
       setComprasClientes(response.data);
-      set;
+      setErrors([]);
     } catch (error) {
       console.log(error);
+      setErrors(error.response.data);
     }
+    setLoadingSale(false);
   };
 
+  const toggleModalSaleDetail = () => {
+    setShowModalSaleDetail((prevState) => {
+      return !prevState
+    })
+  }
+
+  const listarDetalleVenta = async (id) => {
+
+    try {
+      const response = await peticionListarDetalleCompra(id);
+      console.log(response.data);
+      setDetalleCompra(response.data);
+      setErrors([]);
+    } catch (error) {
+      console.log(error);
+      setErrors(error.response.data);
+    }
+
+  }
   const resetSaleState = () => {
     setVentaProcesada(false);
     setErrors([]);
   };
+
 
   return (
     <SaleContext.Provider
@@ -61,6 +87,9 @@ export const SaleProvider = ({ children }) => {
         resetSaleState,
         comprasCliente,
         listarHistorialComprasCliente,
+        toggleModalSaleDetail,
+        showModalSaleDetail,
+        listarDetalleVenta
       }}
     >
       {children}

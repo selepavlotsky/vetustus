@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { peticionListarProductoPorID } from "../../API/Productos";
 import { useCartContext } from "../../context/CartContext";
+import { useProductsContext } from "../../context/ProductsContext";
 
 const ProductDetail = () => {
-  const { cart, addItem, totalCart } = useCartContext();
-  const [detalleProducto, setDetalleProducto] = useState(null);
+  const { cart, addItem } = useCartContext();
+  const {listarDetalleProducto,detalleProducto} = useProductsContext();
+ 
   const [cantidad, setCantidad] = useState(1); // lo empezamos en 1 ya que no se podria comprar 0 productos.
+  const [disponibilidad, setDisponibilidad] = useState(true);
+
+  function verificarStockProducto() {
+    const prodEnCarrito = cart.find((prod) => prod.product == id)
+    if (prodEnCarrito) {
+      if (prodEnCarrito.cantidad >= detalleProducto.stock) {
+        setDisponibilidad(false);
+      }
+    }
+  }
+
 
   //creamos el estado para meter los datos del detalle producto cuando se obtengan de la api.
   //inicialmente es null porque aun no se cargo nada.
@@ -15,23 +27,19 @@ const ProductDetail = () => {
   //accedemos al id del producto para saber que producto es
 
   useEffect(() => {
-    async function listarDetalle() {
-      try {
-        const response = await peticionListarProductoPorID(id); //detalle va a ser el producto puntual con ese id.
-        setDetalleProducto(response.data); // se actualiza el estado y entonces se renderiza el componente ahora si con la informacion del producto.
-      } catch (error) {
-        alert(error);
-      }
+    listarDetalleProducto(id)
+  }, [id]);
+
+  useEffect(() => {
+    if (detalleProducto) {
+      verificarStockProducto();
     }
-
-    listarDetalle();
-  }, []);
-
+  }, [detalleProducto,cart])
   //funcion para manejar la cantidad, cuando reste o aumente
   const handleChangeCantidad = (e) => {
     // pasame el evento x parametro
     const value = e.target.value; // obtenemos el valor del input
-    if (!isNaN(value) && value >= 1) {
+    if (!isNaN(value) && value >= 1 && value <= detalleProducto.stock) {
       /* si el numero es valido o si es mayor o igual a 1 entonces ese valor que ingresa
     el usuario ponemelo en el estado*/
       setCantidad(value);
@@ -42,7 +50,9 @@ const ProductDetail = () => {
   };
 
   const agregarAlCarrito = (item) => {
+    //const {cantidad, stockDisponible } = item;
     addItem(item);
+
   };
 
   return (
@@ -57,33 +67,49 @@ const ProductDetail = () => {
             <h1>{detalleProducto.titulo}</h1>
             <p>{detalleProducto.descripcion}</p>
             <p>${detalleProducto.precio}</p>
-            <div className="stock-details">
-              <p>
-                {" "}
-                En stock: <span>{detalleProducto.stock}</span>
-              </p>
-              <input
-                type="number"
-                placeholder="1"
-                value={cantidad}
-                onChange={handleChangeCantidad}
-                min="1"
-                max={detalleProducto.stock}
-              />
-            </div>
 
-            <button
-              onClick={() => {
-                agregarAlCarrito({
-                  id: detalleProducto._id,
-                  cantidad: 1,
-                  precio: detalleProducto.precio,
-                });
-              }}
-            >
-              Agregar al carrito
-            </button>
+            {
+              disponibilidad &&
+              <>
+                <div className="stock-details">
+                  <p>
+                    En stock: <span>{detalleProducto.stock}</span>
+                  </p>
+                  {
+                    detalleProducto.stock > 0 &&
+                    <input
+                      type="number"
+                      placeholder="1"
+                      value={cantidad}
+                      onChange={handleChangeCantidad}
+                      min="1"
+                      max={detalleProducto.stock}
+                    />
+
+                  }
+
+                </div>
+
+
+                <button
+                  onClick={() => {
+                    agregarAlCarrito({
+                      id: detalleProducto._id,
+                      stockDisponible: detalleProducto.stock,
+                      cantidad: cantidad,
+                      precio: detalleProducto.precio,
+                    });
+                  }}
+                >
+                  Agregar al carrito
+                </button>
+
+              </>
+            }
+
+
           </div>
+
         </div>
       )}
     </div>

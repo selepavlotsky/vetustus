@@ -66,6 +66,7 @@ export const ProductsProvider = ({ children }) => {
         detalleProducto,
         listarProductosPorCategoria,
         listarDetalleProducto,
+        detalleProducto
       }}
     >
       {children}
