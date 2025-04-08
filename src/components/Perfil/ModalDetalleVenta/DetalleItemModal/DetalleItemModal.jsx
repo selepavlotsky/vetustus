@@ -1,10 +1,10 @@
 const DetalleItemModal = (
-  titulo,
-  portada,
-  descripcion,
-  precio,
-  subtotal,
-  cantidad
+  { titulo,
+    portada,
+    descripcion,
+    precio,
+    subtotal,
+    cantidad }
 ) => {
   return (
     <div className="producto-detail-popup">
@@ -16,14 +16,15 @@ const DetalleItemModal = (
       </div>
 
       <p>
-        Precio por unidad: <span>{precio}</span>
-      </p>
-      <p>
-        Subtotal: <span>{subtotal}</span>
+        Precio por unidad: <span>${precio}</span>
       </p>
       <p>
         Cantidad:<span> {cantidad}</span>
       </p>
+      <p>
+        Subtotal: <span>${subtotal}</span>
+      </p>
+
     </div>
   );
 };
