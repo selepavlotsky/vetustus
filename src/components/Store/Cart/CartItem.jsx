@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCartContext } from "../../../context/CartContext";
+import { PuffLoader } from "react-spinners";
 
 const CartItem = ({
   id,
@@ -38,22 +39,32 @@ const CartItem = ({
       />
       <h3 className="titulo-producto-carrito">{titulo}</h3>
       <div className="contenedor-cantidad">
-        {isLoading && ( // si isLoading es true entonces mostrar frase modificando cantidad
-          <span className="loading-text">Modificando cantidad...</span>
-        )}
-        <button
-          onClick={() => handleRestarCantidad(id)}
-          className="restar-cantidad"
-        >
-          -
-        </button>
-        <span>{cantidadProducto}</span>
-        <button
-          onClick={() => handleSumarCantidad(id)}
-          className="sumar-cantidad"
-        >
-          +
-        </button>
+        {
+          isLoading ?
+            ( // si isLoading es true entonces mostrar frase modificando cantidad
+              <PuffLoader size={24}/>
+              //<span className="loading-text">Modificando cantidad...</span>
+            )
+            :
+            (
+              <>
+                <button
+                  onClick={() => handleRestarCantidad(id)}
+                  className="restar-cantidad"
+                >
+                  -
+                </button>
+                <span>{cantidadProducto}</span>
+                <button
+                  onClick={() => handleSumarCantidad(id)}
+                  className="sumar-cantidad"
+                >
+                  +
+                </button>
+              </>
+            )
+        }
+
       </div>
 
       <p className="precio-producto-carrito">${precio}</p>

@@ -2,21 +2,28 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useCartContext } from "../../context/CartContext";
 import { useProductsContext } from "../../context/ProductsContext";
+import { PulseLoader } from "react-spinners";
 
 const ProductDetail = () => {
-  const { cart, addItem } = useCartContext();
-  const {listarDetalleProducto,detalleProducto} = useProductsContext();
- 
+  const { cart, addItem, isLoading } = useCartContext();
+  const { listarDetalleProducto, detalleProducto } = useProductsContext();
+
   const [cantidad, setCantidad] = useState(1); // lo empezamos en 1 ya que no se podria comprar 0 productos.
   const [disponibilidad, setDisponibilidad] = useState(true);
+  const [stockDisponible, setStockDisponible] = useState(null);
 
   function verificarStockProducto() {
     const prodEnCarrito = cart.find((prod) => prod.product == id)
+
+    let stockActual = detalleProducto.stock
+
     if (prodEnCarrito) {
       if (prodEnCarrito.cantidad >= detalleProducto.stock) {
         setDisponibilidad(false);
       }
+      stockActual = detalleProducto.stock - prodEnCarrito.cantidad
     }
+    setStockDisponible(stockActual)
   }
 
 
@@ -34,11 +41,11 @@ const ProductDetail = () => {
     if (detalleProducto) {
       verificarStockProducto();
     }
-  }, [detalleProducto,cart])
+  }, [detalleProducto, cart])
   //funcion para manejar la cantidad, cuando reste o aumente
   const handleChangeCantidad = (e) => {
     // pasame el evento x parametro
-    const value = e.target.value; // obtenemos el valor del input
+    const value = parseInt(e.target.value); // obtenemos el valor del input -> lo parseamos porque desde el input se captura como string
     if (!isNaN(value) && value >= 1 && value <= detalleProducto.stock) {
       /* si el numero es valido o si es mayor o igual a 1 entonces ese valor que ingresa
     el usuario ponemelo en el estado*/
@@ -73,7 +80,7 @@ const ProductDetail = () => {
               <>
                 <div className="stock-details">
                   <p>
-                    En stock: <span>{detalleProducto.stock}</span>
+                    En stock: <span>{stockDisponible}</span>
                   </p>
                   {
                     detalleProducto.stock > 0 &&
@@ -100,8 +107,9 @@ const ProductDetail = () => {
                       precio: detalleProducto.precio,
                     });
                   }}
+
                 >
-                  Agregar al carrito
+                  {isLoading ? <PulseLoader /> : 'Agregar al carrito'}
                 </button>
 
               </>
