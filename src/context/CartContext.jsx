@@ -34,9 +34,10 @@ export const CartProvider = ({ children }) => {
   };
 
   const addItem = async (item) => {
+    setIsLoading(true)
     const prodExistente = cart.find((producto) => producto.product === item.id);
     let updatedCart = [];
-    
+
     if (prodExistente) {
       // si quiere agregar un prod que ya está en el carrito, verifico si la nueva cantidad supera al stock, si es asi muestro error
       let nuevaCantidad = parseInt(item.cantidad) + parseInt(prodExistente.cantidad)
@@ -66,7 +67,8 @@ export const CartProvider = ({ children }) => {
     setTotalCart(totalCart + item.precio * item.cantidad);
 
     await peticionActualizarCarrito({ cart: updatedCart });
-    alert('Producto agregado al carrito')
+    setIsLoading(false)
+     alert('Producto agregado al carrito')
     /*   setTotalCart((prevState) => {
       return prevState + item.precio * item.cantidad;
     }); */
