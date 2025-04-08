@@ -17,6 +17,7 @@ export const useSaleContext = () => {
 
 export const SaleProvider = ({ children }) => {
   const [loadingSale, setLoadingSale] = useState(false);
+  const [loadingDetailSale, setLoadingDetailSale] = useState(false);
   const [errors, setErrors] = useState([]);
   const [ventaProcesada, setVentaProcesada] = useState(false);
   const [comprasCliente, setComprasClientes] = useState([]);
@@ -59,7 +60,7 @@ export const SaleProvider = ({ children }) => {
   }
 
   const listarDetalleCompra = async (id) => {
-
+    setLoadingDetailSale(true);
     try {
       const response = await peticionListarDetalleCompra(id);
       console.log(response.data);
@@ -69,7 +70,7 @@ export const SaleProvider = ({ children }) => {
       console.log(error);
       setErrors(error.response.data);
     }
-
+    setLoadingDetailSale(false);
   }
   const resetSaleState = () => {
     setVentaProcesada(false);
@@ -90,7 +91,8 @@ export const SaleProvider = ({ children }) => {
         toggleModalSaleDetail,
         showModalSaleDetail,
         listarDetalleCompra,
-        detalleCompra
+        detalleCompra,
+        loadingDetailSale
       }}
     >
       {children}
