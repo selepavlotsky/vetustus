@@ -35,8 +35,8 @@ export const CartProvider = ({ children }) => {
 
   const addItem = async (item) => {
     const prodExistente = cart.find((producto) => producto.product === item.id);
-
     let updatedCart = [];
+    
     if (prodExistente) {
       // si quiere agregar un prod que ya está en el carrito, verifico si la nueva cantidad supera al stock, si es asi muestro error
       let nuevaCantidad = parseInt(item.cantidad) + parseInt(prodExistente.cantidad)

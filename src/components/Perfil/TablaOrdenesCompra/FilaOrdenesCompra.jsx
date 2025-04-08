@@ -2,9 +2,9 @@ import React from 'react'
 import { useSaleContext } from '../../../context/SaleContext'
 
 export const FilaOrdenesCompra = ({ id, fecha, total }) => {
-    const { listarDetalleVenta,toggleModalSaleDetail } = useSaleContext();
+    const { listarDetalleCompra,toggleModalSaleDetail } = useSaleContext();
     const handleClick = () => {
-        listarDetalleVenta(id)
+        listarDetalleCompra(id)
         toggleModalSaleDetail();
     }
     return (

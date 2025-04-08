@@ -58,7 +58,7 @@ export const SaleProvider = ({ children }) => {
     })
   }
 
-  const listarDetalleVenta = async (id) => {
+  const listarDetalleCompra = async (id) => {
 
     try {
       const response = await peticionListarDetalleCompra(id);
@@ -89,7 +89,8 @@ export const SaleProvider = ({ children }) => {
         listarHistorialComprasCliente,
         toggleModalSaleDetail,
         showModalSaleDetail,
-        listarDetalleVenta
+        listarDetalleCompra,
+        detalleCompra
       }}
     >
       {children}
