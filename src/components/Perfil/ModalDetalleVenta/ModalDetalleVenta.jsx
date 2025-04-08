@@ -25,7 +25,7 @@ export const ModalDetalleVenta = () => {
         <hr />
         {
           loadingDetailSale ?
-            <p>Cargando..</p>
+            <p>Cargando...</p>
             :
 
             detalleCompra &&
