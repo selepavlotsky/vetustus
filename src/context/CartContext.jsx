@@ -21,13 +21,14 @@ export const CartProvider = ({ children }) => {
   const [cantidadProductos, setCantidadProductos] = useState(0);
   const [cartDetail, setCartDetail] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDetalle, setIsLoadingDetalle] = useState(false);
 
   const listarCarrito = async () => {
     try {
       const response = await peticionListarCarrito();
       setCart(response.data);
       setCantidadProductos(response.data.length);
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -41,11 +42,12 @@ export const CartProvider = ({ children }) => {
     if (prodExistente) {
       // si quiere agregar un prod que ya está en el carrito, verifico si la nueva cantidad supera al stock, si es asi muestro error
       let nuevaCantidad = parseInt(item.cantidad) + parseInt(prodExistente.cantidad)
-      console.log('nueva cantidad: ' + nuevaCantidad);
-      console.log('stock disponible: ' + item.stockDisponible);
-
+      /* console.log('nueva cantidad: ' + nuevaCantidad);
+       console.log('stock disponible: ' + item.stockDisponible);
+ */
       if (nuevaCantidad > item.stockDisponible) {
         alert('Supera el stock disponible.')
+        setIsLoading(false)
         return false;
       }
       // si el producto ya existe en el carrito
@@ -63,12 +65,13 @@ export const CartProvider = ({ children }) => {
       updatedCart = [...cart, { product: item.id, cantidad: item.cantidad }];
       setCantidadProductos(cantidadProductos + 1);
     }
+
     setCart(updatedCart);
     setTotalCart(totalCart + item.precio * item.cantidad);
-
     await peticionActualizarCarrito({ cart: updatedCart });
     setIsLoading(false)
-     alert('Producto agregado al carrito')
+    alert('Producto agregado al carrito')
+
     /*   setTotalCart((prevState) => {
       return prevState + item.precio * item.cantidad;
     }); */
@@ -86,22 +89,25 @@ export const CartProvider = ({ children }) => {
   }; */
 
   const listarDetalleCarrito = async () => {
+    setIsLoadingDetalle(true)
     try {
-      const response = await peticionListarDetalleCarrito();
-      const cartProducts = response.data; // guardamos el detalle del carrito en cartProducts
+      console.log('se ejecuto listar el detalle de carrito');
 
+      const response = await peticionListarDetalleCarrito();
+      setCartDetail(response.data); // guardamos los productos en el estado de cartDetail
+      const cartProducts = response.data; // guardamos el detalle del carrito en cartProducts
       //calcular el total en base al response.data
       // calculamos el total con metodo reduce
       const total = cartProducts.reduce(
         (acc, product) => acc + product.precio * product.cantidad,
         0
       );
-      setCartDetail(cartProducts); // guardamos los productos en el estado de cartDetail
       setTotalCart(total); //guardamos el valor total en el estado totalCart
       console.log(cartProducts);
     } catch (error) {
       console.log(error);
     }
+    setIsLoadingDetalle(false)
   };
 
   const quitarProductoCarrito = async (id) => {
@@ -180,6 +186,7 @@ export const CartProvider = ({ children }) => {
         restarCantidadCarrito,
         resetCartState,
         isLoading,
+        isLoadingDetalle
       }}
     >
       {children}

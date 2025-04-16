@@ -2,7 +2,7 @@ import "./Store.scss";
 import { Link } from "react-router";
 
 const Product = ({ id, titulo, portada, precio }) => {
-  console.log(portada);
+  
 
   return (
     <div className="product-container">

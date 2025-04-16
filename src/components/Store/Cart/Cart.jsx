@@ -13,6 +13,7 @@ const Cart = () => {
     cart,
     resetCartState,
     isLoading,
+    isLoadingDetalle
   } = useCartContext();
 
   const {
@@ -28,6 +29,7 @@ const Cart = () => {
   useEffect(() => {
     listarDetalleCarrito();
   }, []);
+
 
   const procesarVenta = (venta) => {
     registrarVenta(venta);
@@ -48,43 +50,49 @@ const Cart = () => {
         errors.map((error) => {
           return <p>{error.message}</p>;
         })}
-      {cartDetail.length > 0 ? ( // si hay productos en el carrito lo recorremos para mostrar cada uno
-        <>
-          <div className="cabecera-tabla">
-            <div className="cabecera-tabla-col">Producto</div>
-            <div className="cabecera-tabla-col">Título</div>
-            <div className="cabecera-tabla-col">Cantidad</div>
-            <div className="cabecera-tabla-col">Precio</div>
-            <div className="cabecera-tabla-col">Subtotal</div>
-            <div className="cabecera-tabla-col">Acción</div>
-          </div>
-          {cartDetail.map((producto) => (
-            <CartItem
-              key={producto.id}
-              id={producto.id}
-              titulo={producto.titulo}
-              portada={producto.portada}
-              precio={producto.precio}
-              cantidad={producto.cantidad}
-              stock={producto.stock}
-              isLoading={isLoading}
-            />
-          ))}
-          <div className="contenedor-total-carrito">
-            <h2>
-              Total: <span id="spanTotal">${totalCart} </span>
-            </h2>
-            <button
-              onClick={() => procesarVenta({ total: totalCart, detalle: cart })}
-              id="btnFinalizar"
-            >
-              {loadingSale ? "Procesando.." : " Finalizar Compra"}
-            </button>
-          </div>
-        </>
-      ) : (
-        <p className="mensaje-carrito-vacio">El carrito está vacío</p>
-      )}
+      {
+        isLoadingDetalle ?
+          <p>Cargando..</p>
+          :
+
+          cartDetail.length > 0 ? ( // si hay productos en el carrito lo recorremos para mostrar cada uno
+            <>
+              <div className="cabecera-tabla">
+                <div className="cabecera-tabla-col">Producto</div>
+                <div className="cabecera-tabla-col">Título</div>
+                <div className="cabecera-tabla-col">Cantidad</div>
+                <div className="cabecera-tabla-col">Precio</div>
+                <div className="cabecera-tabla-col">Subtotal</div>
+                <div className="cabecera-tabla-col">Acción</div>
+              </div>
+              {cartDetail.map((producto) => (
+                <CartItem
+                  key={producto.id}
+                  id={producto.id}
+                  titulo={producto.titulo}
+                  portada={producto.portada}
+                  precio={producto.precio}
+                  cantidad={producto.cantidad}
+                  stock={producto.stock}
+                  isLoading={isLoading}
+                />
+              ))}
+              <div className="contenedor-total-carrito">
+                <h2>
+                  Total: <span id="spanTotal">${totalCart} </span>
+                </h2>
+                <button
+                  onClick={() => procesarVenta({ total: totalCart, detalle: cart })}
+                  id="btnFinalizar"
+                >
+                  {loadingSale ? "Procesando.." : " Finalizar Compra"}
+                </button>
+              </div>
+            </>
+          ) : (
+            <p className="mensaje-carrito-vacio">El carrito está vacío</p>
+          )
+      }
     </section>
   );
 };

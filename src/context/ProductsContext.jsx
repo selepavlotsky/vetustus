@@ -28,7 +28,7 @@ export const ProductsProvider = ({ children }) => {
       const response = await peticionListarProductos(); //llamamos a la peticion para obtener los productos
       setListadoProductos(response.data); //guardamos los productos en listadoProductos
       setErrors([]); //si hay error se guardan los errores en errors
-      console.log(response.data);
+
     } catch (error) {
       setErrors([error.response.data.message]);
     }
@@ -48,8 +48,6 @@ export const ProductsProvider = ({ children }) => {
     try {
       const response = await peticionListarProductoPorID(id); // obtiene un producto especifico mediante su id
       setDetalleProducto(response.data); //se guarda en detalleProducto
-      console.log(response.data);
-
       setErrors([]);
     } catch (error) {
       setErrors([error.response.data.message]);
