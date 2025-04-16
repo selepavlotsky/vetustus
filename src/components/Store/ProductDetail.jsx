@@ -10,17 +10,26 @@ const ProductDetail = () => {
 
   const [cantidad, setCantidad] = useState(1); // lo empezamos en 1 ya que no se podria comprar 0 productos.
   const [disponibilidad, setDisponibilidad] = useState(true);
+  console.log('componente inicializado, disponiblidad: ' + disponibilidad.toString());
+  
   const [stockDisponible, setStockDisponible] = useState(null);
 
   function verificarStockProducto() {
+    console.log('disponiblidad ' + disponibilidad.toString());
+    
     const prodEnCarrito = cart.find((prod) => prod.product == id)
 
     let stockActual = detalleProducto.stock
 
     if (prodEnCarrito) {
+      
       if (prodEnCarrito.cantidad >= detalleProducto.stock) {
         setDisponibilidad(false);
+        // EL ERROR ESTABA EN QUE TENIA QUE VOLVER A CAMBIAR EL ESTADO PORQUE ME QUEDA EL ESTADO DEL 'DETALLE' ANTERIOR.
+      }else{
+        setDisponibilidad(true);
       }
+      
       stockActual = detalleProducto.stock - prodEnCarrito.cantidad
     }
     setStockDisponible(stockActual)

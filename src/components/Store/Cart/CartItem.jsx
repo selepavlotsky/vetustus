@@ -14,19 +14,23 @@ const CartItem = ({
   const { quitarProductoCarrito, sumarCantidadCarrito, restarCantidadCarrito } =
     useCartContext();
 
-  const [cantidadProducto, setCantidadProducto] = useState(cantidad);
+    console.log('loader: '+ isLoading);
+    
+
+    // El problema está aca porque al primer renderizado el estado se inicia con la primer cantidad, luego la cantidad cambia pero no puedo volver a inicializar el estado.
+   //const [cantidadProducto, setCantidadProducto] = useState(cantidad);
 
   const handleRestarCantidad = (id) => {
-    if (cantidadProducto - 1 >= 1) {
+    if (cantidad - 1 >= 1) {
       restarCantidadCarrito(id);
-      setCantidadProducto(cantidadProducto - 1);
+    //  setCantidadProducto(cantidadProducto - 1);
     }
   };
 
   const handleSumarCantidad = (id) => {
-    if (cantidadProducto + 1 <= stock) {
+    if (cantidad + 1 <= stock) {
       sumarCantidadCarrito(id);
-      setCantidadProducto(cantidadProducto + 1);
+      //setCantidadProducto(cantidadProducto + 1);
     }
   };
 
@@ -54,7 +58,7 @@ const CartItem = ({
                 >
                   -
                 </button>
-                <span>{cantidadProducto}</span>
+                <span>{cantidad}</span>
                 <button
                   onClick={() => handleSumarCantidad(id)}
                   className="sumar-cantidad"

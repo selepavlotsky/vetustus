@@ -58,17 +58,17 @@ export const UserProvider = ({ children }) => {
         const response = await peticionVerificarTokenUsuario(); // si el token es valido
         setUsuario(response.data); // se guarda la info en el estado usuario
         setEstaAutenticado(true); //entonces esta autenticado
-        console.log("Usuario verificado desde el back.");
+       // console.log("Usuario verificado desde el back.");
       } catch (error) {
         //sino
         setUsuario(null);
         setEstaAutenticado(false);
-        console.log("Usuario denegado desde el back.");
+       // console.log("Usuario denegado desde el back.");
       }
     } else {
       setUsuario(null); // limpiado el estado del usuario, no hay usuario ingresado
       setEstaAutenticado(false); // no esta autenticado
-      console.log("Usuario denegado desde el front.");
+     //console.log("Usuario denegado desde el front.");
     }
     setIsLoadingUser(false);
   }
