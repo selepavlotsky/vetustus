@@ -1,9 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import {
   peticionLogin,
   peticionRegister,
   peticionVerificarTokenUsuario,
 } from "../API/usuarios";
+import { useNavigate } from "react-router";
+import {
+  ACTIONS,
+  authReducer,
+  initialState,
+} from "../reducer/Auth/authReducer";
 
 export const UserContext = createContext();
 
@@ -16,61 +22,63 @@ export const useUserContext = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [usuario, setUsuario] = useState(null);
-  const [estaAutenticado, setEstaAutenticado] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
+
+  const [state, dispatch] = useReducer(authReducer, initialState); // se crea el estado para usar dentro del componente
+  const { usuario, estaAutenticado, errors, isLoading: isLoadingUser } = state; // desestructuramos las propiedades del estado para usarlas desp
 
   const registerUsuario = async (usuario) => {
+    dispatch({ type: ACTIONS.INIT_REQUEST });
     try {
       const response = await peticionRegister(usuario);
-      setUsuario(response.data.usuario);
+      dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data.usuario });
       localStorage.setItem("token", response.data.token);
-      setEstaAutenticado(true);
     } catch (error) {
-      setErrors([error.response.data.message]);
+      dispatch({
+        type: ACTIONS.SET_ERRORS,
+        payload: [error.response.data.message],
+      });
     }
   };
 
   const loginUsuario = async (usuario) => {
+    dispatch({ type: ACTIONS.INIT_REQUEST });
     try {
       const response = await peticionLogin(usuario);
-      setUsuario(response.data.usuario);
+      dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data.usuario });
       localStorage.setItem("token", response.data.token);
-      setEstaAutenticado(true);
     } catch (error) {
-      setErrors([error.response.data.message]);
+      dispatch({
+        type: ACTIONS.SET_ERRORS,
+        payload: [error.response.data.message],
+      });
     }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
-    setEstaAutenticado(false); // el usuario ya no está autenticado
-    setUsuario(null); // limpiamos la informacion del usuario
+    dispatch({ type: ACTIONS.LOGOUT_USER });
+    navigate("/");
   };
 
   /* VERIFICACIÓN DE LOGIN */
 
   async function verificarLogin() {
+    dispatch({ type: ACTIONS.INIT_REQUEST });
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await peticionVerificarTokenUsuario(); // si el token es valido
-        setUsuario(response.data); // se guarda la info en el estado usuario
-        setEstaAutenticado(true); //entonces esta autenticado
-       // console.log("Usuario verificado desde el back.");
+        const response = await peticionVerificarTokenUsuario();
+        dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data.usuario });
       } catch (error) {
-        //sino
-        setUsuario(null);
-        setEstaAutenticado(false);
-       // console.log("Usuario denegado desde el back.");
+        dispatch({
+          type: ACTIONS.SET_ERRORS,
+          payload: [error.response.data.message],
+        });
       }
     } else {
-      setUsuario(null); // limpiado el estado del usuario, no hay usuario ingresado
-      setEstaAutenticado(false); // no esta autenticado
-     //console.log("Usuario denegado desde el front.");
+      dispatch({ type: ACTIONS.RESET_STATE });
     }
-    setIsLoadingUser(false);
   }
 
   useEffect(() => {
