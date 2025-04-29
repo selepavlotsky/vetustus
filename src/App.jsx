@@ -12,7 +12,9 @@ import CartProductDetail from "./components/Store/ProductDetail";
 import Prueba from "./components/Prueba/Prueba";
 import PerfilUsuario from "./components/Perfil/PerfilUsuario/PerfilUsuario";
 import SuccessfulPurchase from "./components/Store/SuccessfulPurchase/SuccessfulPurchase";
+import Panel from "./admin/Panel/Panel";
 import { RutasProtegidas } from "./RutasProtegidas";
+import { RutasProtegidasAdmin } from "./RutasProtegidasAdmin";
 import { ProductsProvider } from "./context/productsContext";
 import { UserProvider } from "./context/userContext";
 import { CartProvider } from "./context/CartContext";
@@ -50,6 +52,10 @@ function App() {
                     path="/compraexitosa"
                     element={<SuccessfulPurchase />}
                   />
+                </Route>
+
+                <Route element={<RutasProtegidasAdmin />}>
+                  <Route path="/panel" element={<Panel />} />
                 </Route>
 
                 <Route path="/*" element={<NotFound />} />

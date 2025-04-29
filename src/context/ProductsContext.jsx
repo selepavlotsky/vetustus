@@ -3,6 +3,7 @@ import {
   peticionListarProductos,
   peticionListarProductoPorID,
   peticionListarProductosPorCategoria,
+  peticionListarProductosAdmin,
 } from "../API/Productos";
 
 export const ProductsContext = createContext(); // creamos el contexto, nos va a servir para compartir el estado de los productos en toda la app
@@ -22,13 +23,23 @@ export const ProductsProvider = ({ children }) => {
   const [listadoProductos, setListadoProductos] = useState([]); // este estado lo creamos para almacenar la lista de productos que obtenemos de la API, arranca vacio.
   const [detalleProducto, setDetalleProducto] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [listadoProductosAdmin, setListadoProductosAdmin] = useState([]); //creamos el estado para los productos del admin
+
+  const listarProductosAdmin = async () => {
+    try {
+      const response = await peticionListarProductosAdmin();
+      setListadoProductosAdmin(response.data);
+      setErrors([]);
+    } catch (error) {
+      setErrors([error.response.data.message]);
+    }
+  };
 
   const listarProductos = async () => {
     try {
       const response = await peticionListarProductos(); //llamamos a la peticion para obtener los productos
       setListadoProductos(response.data); //guardamos los productos en listadoProductos
       setErrors([]); //si hay error se guardan los errores en errors
-
     } catch (error) {
       setErrors([error.response.data.message]);
     }
@@ -64,7 +75,8 @@ export const ProductsProvider = ({ children }) => {
         detalleProducto,
         listarProductosPorCategoria,
         listarDetalleProducto,
-        detalleProducto
+        listarProductosAdmin,
+        listadoProductosAdmin,
       }}
     >
       {children}

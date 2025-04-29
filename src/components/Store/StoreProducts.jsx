@@ -86,7 +86,12 @@ const StoreProducts = () => {
           </Link>
         </div>
 
-        <ProductSearchBar busqueda={busqueda} updateBusqueda={updateBusqueda} />
+        <div className="search-container">
+          <ProductSearchBar
+            busqueda={busqueda}
+            updateBusqueda={updateBusqueda}
+          />
+        </div>
 
         <div className="price-container">
           <h2>Precio:</h2>

@@ -1,13 +1,14 @@
 import "./Header.scss";
 import VetustusLogo from "../../assets/logo.png";
 import NavBar from "../NavBar/NavBar";
-import ProductSearchBar from "../ProductSearchBar/ProductSearchBar";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { NavLink } from "react-router";
 import { useUserContext } from "../../context/UserContext";
 
 const Header = () => {
-  const { estaAutenticado, logout } = useUserContext();
+  const { estaAutenticado, logout, usuario } = useUserContext();
+  console.log("usuario:", usuario);
+
   return (
     <>
       <div className="top-header-container">
@@ -22,14 +23,17 @@ const Header = () => {
             </a>
           </div>
 
-          <ProductSearchBar />
-
           <div className="cart-actions-details">
             <ShoppingCart />
             <div className="actions-container">
               {estaAutenticado ? (
                 <>
                   <NavLink to="/perfil"> Perfil </NavLink>
+                  {usuario?.rol === "admin" && ( // agregamos el ? para preguntar primero si usuario existe, si existe vemos que rol tiene
+                    <NavLink to="panel" className="enlace-menu">
+                      Panel
+                    </NavLink>
+                  )}
                   <NavLink to="perfil" onClick={logout}>
                     Salir
                   </NavLink>
@@ -52,3 +56,5 @@ const Header = () => {
 };
 
 export default Header;
+
+//cuando hago click en perfil dentro de admin me tira el perfil de otro usuario

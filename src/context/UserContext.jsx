@@ -69,7 +69,7 @@ export const UserProvider = ({ children }) => {
     if (token) {
       try {
         const response = await peticionVerificarTokenUsuario();
-        dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data.usuario });
+        dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data.usuario }); // extraemos solo el usuario de data
       } catch (error) {
         dispatch({
           type: ACTIONS.SET_ERRORS,

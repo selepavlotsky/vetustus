@@ -16,6 +16,7 @@ const Login = () => {
     loginUsuario,
     errors: errorsLogin,
     estaAutenticado,
+    usuario,
   } = useUserContext();
 
   const onSubmit = handleSubmit(async (values) => {
@@ -23,12 +24,16 @@ const Login = () => {
   });
 
   useEffect(() => {
-    console.log(estaAutenticado);
-
     if (estaAutenticado) {
-      navigate("/");
+      // si esta autenticado
+      if (usuario?.rol === "admin") {
+        //y si es igual a admin
+        navigate("/panel"); // llevame al panel
+      } else {
+        navigate("/"); // si esta autenticado pero no es admin, llevame al home
+      }
     }
-  }, [estaAutenticado]);
+  }, [estaAutenticado]); // cada vez que estaAutenticado cambia se ejecuta esto
 
   return (
     <div className="login-container">

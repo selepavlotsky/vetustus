@@ -6,6 +6,7 @@ export const ACTIONS = {
   SET_ERRORS: "SET_ERRORS", // si hay un error se muestra el mensaje de error y se resetea
   LOGOUT_USER: "LOGOUT_USER", // vuelve al inicial state, se borran los datos
   RESET_STATE: "RESET_STATE", // resetea el estado al estado inicial
+  VERIFY_FAILURE: "VERIFY_FAILURE", //
 };
 
 //estado inicial
@@ -14,6 +15,7 @@ export const initialState = {
   estaAutenticado: false,
   errors: [],
   isLoading: false,
+  isLoadingAuth: true,
 };
 
 //funcion reductora
@@ -39,6 +41,8 @@ export const authReducer = (state, action) => {
       };
     case ACTIONS.LOGOUT_USER:
       return { ...initialState };
+    case ACTIONS.VERIFY_FAILURE:
+      return { ...state, isLoadingAuth: false };
     case ACTIONS.RESET_STATE:
       return { ...initialState };
     default:
