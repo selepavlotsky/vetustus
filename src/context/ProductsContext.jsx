@@ -25,6 +25,8 @@ export const ProductsProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [listadoProductosAdmin, setListadoProductosAdmin] = useState([]); //creamos el estado para los productos del admin
 
+  
+
   const listarProductosAdmin = async () => {
     try {
       const response = await peticionListarProductosAdmin();
