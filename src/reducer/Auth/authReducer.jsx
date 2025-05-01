@@ -29,6 +29,7 @@ export const authReducer = (state, action) => {
         usuario: action.payload,
         estaAutenticado: true,
         isLoading: false,
+        isLoadingAuth: false,
         errors: [],
       };
     case ACTIONS.SET_ERRORS:
@@ -38,6 +39,7 @@ export const authReducer = (state, action) => {
         usuario: null,
         estaAutenticado: false,
         isLoading: false,
+        isLoadingAuth: false
       };
     case ACTIONS.LOGOUT_USER:
       return { ...initialState };

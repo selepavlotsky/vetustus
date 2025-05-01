@@ -3,7 +3,7 @@ import { useUserContext } from "./context/UserContext";
 
 export const RutasProtegidasAdmin = () => {
   const { estaAutenticado, isLoadingAuth, usuario } = useUserContext();
-
+  
   if (!isLoadingAuth) {
     // si ya terminó de cargar la información del usuario
 

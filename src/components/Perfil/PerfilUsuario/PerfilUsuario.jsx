@@ -18,7 +18,7 @@ const Perfil = () => {
   return (
     <>
       <div className="perfil-container">
-        <h2 className="nombre-usuario">Bienvenido Juan Pérez!</h2>
+        <h2 className="nombre-usuario">Bienvenido!</h2>
 
         <h2>Tus Compras</h2>
         {loadingSale ? (

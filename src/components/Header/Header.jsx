@@ -7,7 +7,6 @@ import { useUserContext } from "../../context/UserContext";
 
 const Header = () => {
   const { estaAutenticado, logout, usuario } = useUserContext();
-  console.log("usuario:", usuario);
 
   return (
     <>

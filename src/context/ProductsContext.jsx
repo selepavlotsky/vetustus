@@ -4,6 +4,7 @@ import {
   peticionListarProductoPorID,
   peticionListarProductosPorCategoria,
   peticionListarProductosAdmin,
+  peticionCrearProductoAdmin,
 } from "../API/Productos";
 
 export const ProductsContext = createContext(); // creamos el contexto, nos va a servir para compartir el estado de los productos en toda la app
@@ -24,6 +25,20 @@ export const ProductsProvider = ({ children }) => {
   const [detalleProducto, setDetalleProducto] = useState(null);
   const [errors, setErrors] = useState([]);
   const [listadoProductosAdmin, setListadoProductosAdmin] = useState([]); //creamos el estado para los productos del admin
+  const [productoCreado, setProductoCreado] = useState(null);
+
+  const crearProducto = async (producto) => {
+    try {
+      const response = await peticionCrearProductoAdmin(producto);
+      setProductoCreado(response.data);
+      setTimeout(() => {
+        setProductoCreado(null);
+      }, 200);
+      setErrors([]);
+    } catch (error) {
+      setErrors([error.response.data.message]);
+    }
+  };
 
   
 
@@ -79,6 +94,8 @@ export const ProductsProvider = ({ children }) => {
         listarDetalleProducto,
         listarProductosAdmin,
         listadoProductosAdmin,
+        crearProducto,
+        productoCreado,
       }}
     >
       {children}

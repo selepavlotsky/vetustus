@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(authReducer, initialState); // se crea el estado para usar dentro del componente
-  const { usuario, estaAutenticado, errors, isLoading: isLoadingUser } = state; // desestructuramos las propiedades del estado para usarlas desp
+  const { usuario, estaAutenticado, errors, isLoading: isLoadingUser, isLoadingAuth } = state; // desestructuramos las propiedades del estado para usarlas desp
 
   const registerUsuario = async (usuario) => {
     dispatch({ type: ACTIONS.INIT_REQUEST });
@@ -69,7 +69,8 @@ export const UserProvider = ({ children }) => {
     if (token) {
       try {
         const response = await peticionVerificarTokenUsuario();
-        dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data.usuario }); // extraemos solo el usuario de data
+        
+        dispatch({ type: ACTIONS.LOGIN_USER, payload: response.data }); // extraemos solo el usuario de data
       } catch (error) {
         dispatch({
           type: ACTIONS.SET_ERRORS,
@@ -77,7 +78,7 @@ export const UserProvider = ({ children }) => {
         });
       }
     } else {
-      dispatch({ type: ACTIONS.RESET_STATE });
+      dispatch({ type: ACTIONS.VERIFY_FAILURE });
     }
   }
 
@@ -95,6 +96,7 @@ export const UserProvider = ({ children }) => {
         loginUsuario,
         logout,
         registerUsuario,
+        isLoadingAuth
       }}
     >
       {children}

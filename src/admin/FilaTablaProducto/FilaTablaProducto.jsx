@@ -1,6 +1,8 @@
 import React from "react";
+import { NavLink } from "react-router";
 
 const FilaTablaProducto = ({
+  id,
   portada,
   titulo,
   precio,
@@ -17,7 +19,12 @@ const FilaTablaProducto = ({
       <td> {descripcion} </td>
       <td>{categoria}</td>
       <td>
-        <button>Editar</button>
+        <NavLink
+          to={`/panel/producto/modificar/${id}`}
+          className="btn-new-product"
+        >
+          Editar
+        </NavLink>
       </td>
       <td>
         <button>Eliminar</button>
