@@ -40,6 +40,8 @@ export const ProductsProvider = ({ children }) => {
     }
   };
 
+  
+
   const listarProductosAdmin = async () => {
     try {
       const response = await peticionListarProductosAdmin();

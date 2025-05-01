@@ -1,6 +1,6 @@
 import { useProductsContext } from "../../context/ProductsContext";
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import "./Panel.scss";
 import FilaTablaProducto from "../FilaTablaProducto/FilaTablaProducto";
 
@@ -10,6 +10,7 @@ const Panel = () => {
   useEffect(() => {
     listarProductosAdmin();
   }, []);
+  
 
   return (
     <div className="panel-container wrapper">

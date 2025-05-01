@@ -9,6 +9,7 @@ const ProductSearchBar = ({ busqueda, updateBusqueda }) => {
   return (
     <div className="product-search-container">
       <input
+      defaultValue={busqueda}
         type="text"
         placeholder="Buscar en Vetustus"
         onChange={handleChangeBusqueda}

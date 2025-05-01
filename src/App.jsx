@@ -13,16 +13,17 @@ import Prueba from "./components/Prueba/Prueba";
 import PerfilUsuario from "./components/Perfil/PerfilUsuario/PerfilUsuario";
 import SuccessfulPurchase from "./components/Store/SuccessfulPurchase/SuccessfulPurchase";
 import Panel from "./admin/Panel/Panel";
-import FormNuevoProducto from "./admin/FormNuevoProducto/FormNuevoProducto";
-import FormModificarProducto from "./admin/FormModificarProducto/FormModificarProducto";
 import { RutasProtegidas } from "./RutasProtegidas";
 import { RutasProtegidasAdmin } from "./RutasProtegidasAdmin";
-import { ProductsProvider } from "./context/productsContext";
-import { UserProvider } from "./context/userContext";
+import { ProductsProvider } from "./context/ProductsContext";
+import { UserProvider } from "./context/UserContext";
 import { CartProvider } from "./context/CartContext";
 import { SaleProvider } from "./context/SaleContext";
+import FormNuevoProducto from "./admin/FormNuevoProducto/FormNuevoProducto";
+import FormModificarProducto from "./admin/FormModificarProducto/FormModificarProducto";
 
 function App() {
+
   return (
     <>
       <UserProvider>
