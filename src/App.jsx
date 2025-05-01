@@ -13,6 +13,8 @@ import Prueba from "./components/Prueba/Prueba";
 import PerfilUsuario from "./components/Perfil/PerfilUsuario/PerfilUsuario";
 import SuccessfulPurchase from "./components/Store/SuccessfulPurchase/SuccessfulPurchase";
 import Panel from "./admin/Panel/Panel";
+import FormNuevoProducto from "./admin/FormNuevoProducto/FormNuevoProducto";
+import FormModificarProducto from "./admin/FormModificarProducto/FormModificarProducto";
 import { RutasProtegidas } from "./RutasProtegidas";
 import { RutasProtegidasAdmin } from "./RutasProtegidasAdmin";
 import { ProductsProvider } from "./context/productsContext";
@@ -56,6 +58,14 @@ function App() {
 
                 <Route element={<RutasProtegidasAdmin />}>
                   <Route path="/panel" element={<Panel />} />
+                  <Route
+                    path="/panel/producto/nuevo"
+                    element={<FormNuevoProducto />}
+                  />
+                  <Route
+                    path="/panel/producto/modificar/:id"
+                    element={<FormModificarProducto />}
+                  />
                 </Route>
 
                 <Route path="/*" element={<NotFound />} />

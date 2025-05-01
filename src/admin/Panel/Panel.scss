@@ -10,20 +10,26 @@
     margin-bottom: 1rem;
     font-size: 18px;
   }
-  button {
+  button,
+  .btn-new-product {
     padding: 8px 16px;
     background-color: #122c45;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    margin-bottom: 2rem;
+    color: #fff;
     font-size: 16px;
     font-weight: 600;
   }
 
-  button:hover {
+  button:hover,
+  .btn-new-product:hover {
     background-color: #2263a0;
   }
+}
+
+.table-products {
+  margin-top: 2rem;
 }
 
 .panel-details {

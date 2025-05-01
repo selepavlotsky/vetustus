@@ -31,7 +31,9 @@ const Panel = () => {
       </div>
       <div>
         <h3>Productos</h3>
-        <button>Nuevo producto</button>
+        <NavLink to="/panel/producto/nuevo" className="btn-new-product">
+          Nuevo Producto
+        </NavLink>
         <table className="table-products">
           <thead>
             <tr>
@@ -50,6 +52,7 @@ const Panel = () => {
                 return (
                   <FilaTablaProducto
                     key={producto._id}
+                    id={producto._id}
                     portada={producto.portada}
                     titulo={producto.titulo}
                     precio={producto.precio}
